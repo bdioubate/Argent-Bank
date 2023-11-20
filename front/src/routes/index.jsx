@@ -2,29 +2,37 @@ import { BrowserRouter as Router, Route, Routes as Switch } from 'react-router-d
 
 //Pages
 import Accueil from '../pages/Accueil'
-import SignIn from '../pages/SignIn'
-import User from '../pages/User'
+import Login from '../pages/Login'
+import Profile from '../pages/Profile'
 import Error from '../pages/Error'
 
 //Components
 import Banner from '../components/Banner'
 import Footer from '../components/Footer'
+import Transactions from '../pages/Transactions'
 
+//Redux
+import { Provider } from 'react-redux'
+import { store } from '../redux'
 
 function RoutesPath() {
+
   return (
+    <Provider store={store}>
     <Router>
-      <body>
+      <div id='body'>
       <Banner />
         <Switch>
           <Route exact path="/" element={<Accueil />}></Route>
-          <Route exact path="/login" element={<SignIn />}></Route>
-          <Route exact path="/profile" element={<User />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="*" element={<Error />}></Route>
+          <Route path="/transactions/:typeTransaction" element={<Transactions />}></Route>
         </Switch>
       <Footer />
-      </body>
+      </div>
     </Router>
+    </Provider>
   )
 }
 
