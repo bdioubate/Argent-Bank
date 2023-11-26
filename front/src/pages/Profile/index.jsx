@@ -1,30 +1,16 @@
 import { useSelector } from 'react-redux'
 
-import { Link, useNavigate } from 'react-router-dom';
-
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 //Redux
 import EditUserName from '../../components/EditUsername';
 
 const Profile = () => {
 
-  //const [typeTransaction, setTypeTransaction] = useState('SAVINGS')
-  const navigate = useNavigate()
   const user = useSelector((state) => state.user);
 
   //L'object de l'utilisateur
   const objectUser = user[0]
-  
-  useEffect(() => {
-
-    //Si l'utilisateur n'est pas connecté le rediriger vers la page login
-    if(objectUser.id === 0) {
-      navigate(`/login`, { replace: true })
-    } else {
-      console.log(objectUser)
-    }
-  }, [objectUser, navigate])
 
   const editUserName = () => {
 

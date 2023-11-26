@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-const CardTransaction = () => {
+const CardTransaction = ({date, description, amount, balance, transaction_type, category, notes}) => {
     const [isVisible, setIsVisible] = useState('flex')
     const [isDown, setIsDown] = useState('down')
 
@@ -17,18 +17,18 @@ const CardTransaction = () => {
                 <i className={`chevron fa-solid fa-chevron-${
                     isDown ? 'down' : 'up'
                 }`}></i>
-                <p>{"June 20th, 2020"}</p>
-                <p>{"Golden Sun Bakery"}</p>
-                <p>{"$5.00"}</p>
-                <p>{"$2082.79"}</p>
+                <p>{date}</p>
+                <p>{description}</p>
+                <p>{amount}</p>
+                <p>{balance}</p>
             </div>
             <div 
                 className="card-transaction__body"
                 style={{ display: isVisible ? 'none' : 'flex' }}
             >
-                <p>Transaction Type: {"Electronic"}</p>
-                <div className="card-transaction__body__category"><p>Category: {"Food"}</p><span class="fa-solid fa-pencil fa-xl"></span></div> 
-                <div className="card-transaction__body__notes"><p>Notes: {""}</p><span class="fa-solid fa-pencil fa-xl"></span></div>
+                <p>Transaction Type: {transaction_type}</p>
+                <div className="card-transaction__body__category"><p>Category: {category}</p><span className="fa-solid fa-pencil fa-xl"></span></div> 
+                <div className="card-transaction__body__notes"><p>Notes: {notes}</p><span className="fa-solid fa-pencil fa-xl"></span></div>
             </div>
         </article>
     )

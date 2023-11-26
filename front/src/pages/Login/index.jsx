@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom';
 
 //Axios
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'; 
+import { useDispatch } from 'react-redux'; 
 
 //Redux
 import { loginUser } from '../../redux';
@@ -14,22 +14,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  //Redux
-  const user = useSelector((state) => state.user);
-  //L'object de l'utilisateur
-  const objectUser = user[0]
-  
-  
-  useEffect(() => {
-
-    //Si l'utilisateur est deja connecté il sera rediriger vers la page profile
-    if(objectUser.id === 1) {
-      navigate(`/profile`, { replace: true })
-    } 
-  }, [objectUser, navigate])
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,13 +42,6 @@ const Login = () => {
 
       //Enregistrer le nouvelle utilisateur dans redux
       dispatch(loginUser(payloadUser))
-
-      
-
-
-      
-
-
 
       //Successfully navigate to a profile page
       navigate(`/profile`, { replace: true })
