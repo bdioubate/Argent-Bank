@@ -2,6 +2,12 @@
     {
         "CHECKING": [
             {
+                "id":"0",
+                "account_title": "Argent Bank Checking (x8349)",
+                "account_amount": "$2,082.79",
+                "account_amount_description": "Available Balance"
+            },
+            {
                 "id": "1",
                 "date": "June 20th, 2020",
                 "description": "Golden Sun Bakery",
@@ -64,6 +70,12 @@
         ],
         "SAVINGS": [
             {
+                "id":"0",
+                "account_title": "Argent Bank Savings (x6712)",
+                "account_amount": "$10,928.42",
+                "account_amount_description": "Available Balance"
+            },
+            {
                 "id": "1",
                 "date": "June 20th, 2020",
                 "description": "Golden Sun Bakery",
@@ -125,6 +137,12 @@
             }
         ],
         "CREDITS_CARD": [
+            {
+                "id":"0",
+                "account_title": "Argent Bank Credit Card (x8349)",
+                "account_amount": "$184.30",
+                "account_amount_description": "Current Balance"
+            },
             {
                 "id": "1",
                 "date": "June 20th, 2020",

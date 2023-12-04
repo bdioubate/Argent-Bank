@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import CardTransaction from "../../components/CardTransaction"
 //Data
-import allTransactions from '../../data/transactions.json'
+import allTransactions from '../../data/transactions.json' 
 
 const Transactions = () => {
 
@@ -10,13 +10,14 @@ const Transactions = () => {
     const { typeTransaction } = useParams() 
 
     const transactionsList = Object.entries(allTransactions[0]).find((item) => item[0] === `${typeTransaction}`)
+    const infoAccount = transactionsList[1][0]
 
     return(
-        transactionsList && (<main className="main">
+        transactionsList && infoAccount && (<main className="main">
             <div className="account-content-wrapper">
-                <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-                <p className="account-amount">$10,928.42</p>
-                <p className="account-amount-description">Available Balance</p>
+                <h3 className="account-title">{infoAccount.account_title}</h3>
+                <p className="account-amount">{infoAccount.account_amount}</p>
+                <p className="account-amount-description">{infoAccount.account_amount_description}</p>
             </div>
             <section id="transactions">
                 <div id="transactions__header">
@@ -28,6 +29,9 @@ const Transactions = () => {
                 <div id="transactions__body">
                   {
                     transactionsList[1].map((transaction, index) => {
+                      if (index === 0) {
+                        return null
+                      }else {
                       return <CardTransaction key={index}
                       date={transaction.date}
                       description={transaction.description}
@@ -37,6 +41,7 @@ const Transactions = () => {
                       category={transaction.category}
                       notes={transaction.notes}
                       />
+                    }
                     })
                   }
                 </div>
