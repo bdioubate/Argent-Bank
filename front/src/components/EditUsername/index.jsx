@@ -22,21 +22,30 @@ const EditUserName = () => {
         headerEditUserNameProfile.style.display = "none"
     }
 
+    const prohibitedValue = () => {
+
+        //Valeurs interdite par l'utilisateur risque d'injection
+        const prohibitedValues = ["<", ">"]
+        if (prohibitedValues.some(i => firstName.includes(i)) || prohibitedValues.some(i => lastName.includes(i))) {
+            throw new Error('Valeurs entrées interdites !') 
+        }
+      }
+
+    const modificationUsernameRedux = () => {
+        const payloadUser = `${firstName}/${lastName}`
+
+        //Modification du prénom et du nom de l'utilisateur
+        dispatch(editUser(payloadUser))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         try {
 
-            //Valeurs interdite par l'utilisateur risque d'injection
-            const prohibitedValues = ["<", ">"]
-            if (prohibitedValues.some(i => firstName.includes(i)) || prohibitedValues.some(i => lastName.includes(i))) {
-                throw new Error('Valeurs entrées interdites !')
-            }
+            prohibitedValue()
 
-            const payloadUser = `${firstName}/${lastName}`
-
-            //Modification du prénom et du nom de l'utilisateur
-            dispatch(editUser(payloadUser))
-
+            modificationUsernameRedux()
+            
             backToProfile()
         } catch (error) {
 

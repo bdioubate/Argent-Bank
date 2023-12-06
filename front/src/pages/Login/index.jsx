@@ -1,13 +1,17 @@
 import { useState } from 'react'
-
 import { useNavigate } from 'react-router-dom';
 
+//callAPI
+
 //Axios
-import axios from 'axios'
-import { useDispatch } from 'react-redux'; 
+//import axios from 'axios'
 
 //Redux
+import { useDispatch } from 'react-redux'; 
 import { loginUser } from '../../redux';
+import callAPi from '../../data/callAPI';
+
+
 const Login = () => {
 
   //LocalStorage
@@ -23,46 +27,58 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  const prohibitedValue = () => {
+    //Valeurs interdite par l'utilisateur risque d'injection
+    const prohibitedValues = ["<", ">"]
+    if (prohibitedValues.some(i => email.includes(i)) || prohibitedValues.some(i => password.includes(i))) {
+      throw new Error('Valeurs entrées interdites !')
+    }
+  }
+
+  const registerUserRedux = (response) => {
+    //Recuperation du prenom et du nom a partir de l'email
+    const firstAndLastname = email.split('.')[0]
+
+    //Prénom de l'utilisateur
+    const firstname = firstAndLastname.split('@')[0]
+  
+    //Nom de l'utilisateur
+    const lastname = firstAndLastname.split('@')[1]
+
+    //Token de l'utilisateur
+    const { token } = response.data.body 
+
+    const payloadUser = `${firstname}/${lastname}/${token}`
+
+    //Enregistrer le nouvelle utilisateur dans redux
+    dispatch(loginUser(payloadUser))
+  }
+
+  const checkboxRemember = () => {
+    //Checkbox remember
+    const rememberId = document.getElementById('remember-me')
+
+    //const objectRemenber = {email: email, password: password }
+    if (rememberId.checked) {
+      localStorage.setItem('rememberUser', JSON.stringify({email: email, password: password }))
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       
       //Valeurs interdite par l'utilisateur risque d'injection
-      const prohibitedValues = ["<", ">"]
-      if (prohibitedValues.some(i => email.includes(i)) || prohibitedValues.some(i => password.includes(i))) {
-        throw new Error('Valeurs entrées interdites !')
-      }
+      prohibitedValue()
 
-      const response = await axios.post('http://localhost:3001/api/v1/user/login', 
-      {
-        email: email,
-        password: password,
-      })
+      //Appel a l'API
+      const response = await callAPi(email, password)
+      
+      //Enregistre le nouvelle utilisateur dans redux
+      registerUserRedux(response)
 
-      //Recuperation du prenom et du nom a partir de l'email
-      const firstAndLastname = email.split('.')[0]
-
-      //Prénom de l'utilisateur
-      const firstname = firstAndLastname.split('@')[0]
-    
-      //Nom de l'utilisateur
-      const lastname = firstAndLastname.split('@')[1]
-
-      //Token de l'utilisateur
-      const { token } = response.data.body 
-
-      const payloadUser = `${firstname}/${lastname}/${token}`
-
-      //Enregistrer le nouvelle utilisateur dans redux
-      dispatch(loginUser(payloadUser))
-
-      //Checkbox remember
-      const rememberId = document.getElementById('remember-me')
-
-      //const objectRemenber = {email: email, password: password }
-      if (rememberId.checked) {
-        localStorage.setItem('rememberUser', JSON.stringify({email: email, password: password }))
-      }
+      //Enregistre dans le localStorage
+      checkboxRemember()
 
       //Successfully navigate to a profile page
       navigate(`/profile`, { replace: true })
@@ -70,7 +86,7 @@ const Login = () => {
     } catch (error) {
 
       // Gérer les erreurs
-      console.error('Erreur lors de la connexion:', error.message)
+      console.error(error.message)
     }
   }
 
@@ -103,39 +119,3 @@ const Login = () => {
 }
 
 export default Login 
-
-
-/*try {
-      const response = await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json',
-		      'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        // Traiter la réponse de l'API en fonction de vos besoins
-        console.log('Réponse de l\'API:'+ data);
-
-        // Assurez-vous que la réponse contient un token
-        const { token } = data;
-
-        // Voici le token
-        console.log('Voici le token : '+ token);
-
-      } else {
-        // Gérer les erreurs de l'API
-        console.error('Erreur lors de la connexion:', response.status);
-      }
-    } catch (error) {
-      // Gérer les erreurs de fetch
-      console.error('Erreur lors de la connexion:', error.message);
-    }
-  };*/
