@@ -75,7 +75,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -105,7 +105,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -116,8 +116,8 @@ paths:
     get:
       tags:
       - User Transactions
-      summary: User's Account
-      description: API for getting all accounts
+      summary: User Account
+      description: API to get an account
       parameters:
       - in: header
         name: Authorization
@@ -126,24 +126,24 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       responses:
         '200':
-          description: Transaction retrieved successully
+          description: Account retrieved successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Account'
         '400':
-          description: Bad request. User ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
   /user/accounts/{accountId}/transactions:
     get:
       tags:
       - User Transactions
-      summary: Transactions
-      description: API for getting all transactions for the current month
+      summary: Current month's transactions for an account
+      description: API for getting all transactions for the current month for an account
       parameters:
       - in: header
         name: Authorization
@@ -152,19 +152,19 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       responses:
         '200':
-          description: Transaction retrieved successully
+          description: Current month's transactions for a successfully recovered account 
           schema:
             $ref: '#/definitions/Transactions'
         '400':
-          description: Bad request. User ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}:
+  /user/accounts/{accountId}/transactions/{transactionId}:
     get:
       tags:
       - User Transactions
@@ -178,24 +178,24 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       responses:
         '200':
-          description: Transaction retrieved successully
+          description: Transaction retrieved successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}/category:
+  /user/accounts/{accountId}/transactions/{transactionId}/category:
     post:
       tags:
       - User Transactions
@@ -213,12 +213,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -226,14 +226,14 @@ paths:
         required: true
         description: Post transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsPostCategory'
+            $ref: '#/definitions/TransactionPostCategory'
       responses:
         '200':
-          description: Transaction posted successully
+          description: Transaction posted category successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
     patch:
@@ -253,12 +253,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -266,14 +266,14 @@ paths:
         required: true
         description: Update transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsUpdateCategory'
+            $ref: '#/definitions/TransactionUpdateCategory'
       responses:
         '200':
-          description: Transaction updated successully
+          description: Transaction updated category successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
     delete:
@@ -293,12 +293,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -306,17 +306,17 @@ paths:
         required: true
         description: Delete transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsDeleteCategory'
+            $ref: '#/definitions/TransactionDeleteCategory'
       responses:
         '200':
-          description: Transaction deleted successully
+          description: Transaction deleted category successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
-  /user/accounts/{accountId}/transactions/{transactionsId}/notes:
+  /user/accounts/{accountId}/transactions/{transactionId}/notes:
     post:
       tags:
       - User Transactions
@@ -334,12 +334,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -347,14 +347,14 @@ paths:
         required: true
         description: Post transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsPostNotes'
+            $ref: '#/definitions/TransactionPostNote'
       responses:
         '200':
-          description: Transaction posted successully
+          description: Transaction posted note successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
     patch:
@@ -374,12 +374,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -387,14 +387,14 @@ paths:
         required: true
         description: Update transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsUpdateNotes'
+            $ref: '#/definitions/TransactionUpdateNote'
       responses:
         '200':
-          description: Transaction updated successully
+          description: Transaction updated note successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
     delete:
@@ -414,12 +414,12 @@ paths:
         required: true
       - in: path
         name: accountId
-        description: User's account ID
+        description: User account ID
         type: integer
         required: true
       - in: path
-        name: transactionsId
-        description: Transaction's ID
+        name: transactionId
+        description: Transaction ID
         required: true
         type: integer
       - in: body
@@ -427,14 +427,14 @@ paths:
         required: true
         description: Delete transaction's informations
         schema:
-            $ref: '#/definitions/TransactionsDeleteNotes'
+            $ref: '#/definitions/TransactionDeleteNote'
       responses:
         '200':
-          description: Transaction deleted successully
+          description: Transaction deleted note successfully
           schema:
-            $ref: '#/definitions/Transactions'
+            $ref: '#/definitions/Transaction'
         '400':
-          description: Bad request. User ID/ transaction ID must be an integer and larger than 0.
+          description: Bad request.
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -491,10 +491,28 @@ definitions:
         type: string
       lastName:
         type: string
+  Account:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
   Transactions:
     type: object
     properties:
-      transactionsId:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+  Transaction:
+    type: object
+    properties:
+      transactionId:
         type: integer
         format: int64
       date:
@@ -511,32 +529,32 @@ definitions:
         type: string
       notes:
         type: string
-  TransactionsPostCategory:
+  TransactionPostCategory:
     type: object
     properties:
       category:
         type: string
-  TransactionsUpdateCategory:
+  TransactionUpdateCategory:
     type: object
     properties:
       category:
         type: string
-  TransactionsDeleteCategory:
+  TransactionDeleteCategory:
     type: object
     properties:
       category:
         type: string
-  TransactionsPostNotes:
+  TransactionPostNote:
     type: object
     properties:
       notes:
         type: string
-  TransactionsUpdateNotes:
+  TransactionUpdateNote:
     type: object
     properties:
       notes:
         type: string
-  TransactionsDeleteNotes:
+  TransactionDeleteNote:
     type: object
     properties:
       notes:
